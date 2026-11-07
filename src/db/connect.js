@@ -1,6 +1,8 @@
+
 import { MongoClient } from 'mongodb';
 
 let database;
+let client;
 
 const connectToDb = async () => {
     const connectionString = process.env.MONGODB_URI;
@@ -9,13 +11,15 @@ const connectToDb = async () => {
         throw new Error('MONGODB_URI is required.');
     }
 
-    const client = new MongoClient(connectionString);
+    client = new MongoClient(connectionString);
 
     await client.connect();
 
     database = client.db(
         process.env.MONGODB_DB_NAME || 'practice'
     );
+
+    console.log('Successfully connected to MongoDB Atlas');
 
     return database;
 };
