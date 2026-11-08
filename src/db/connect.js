@@ -1,21 +1,39 @@
 import { MongoClient } from 'mongodb';
 
-const client = new MongoClient(process.env.MONGODB_URI);
-
-let db;
+let database;
+let client;
 
 const connectToDb = async () => {
+  const connectionString = process.env.MONGODB_URI;
+
+  if (!connectionString) {
+    throw new Error('MONGODB_URI is required.');
+  }
+
+  client = new MongoClient(connectionString);
   await client.connect();
-  db = client.db(process.env.MONGODB_DB_NAME);
-  console.log('Successfully connected to MongoDB Atlas');
+
+  database = client.db(
+    process.env.MONGODB_DB_NAME || 'practice'
+  );
+
+  return database;
 };
 
 const getDb = () => {
-  if (!db) {
-    throw new Error('Database is not connected');
+  if (!database) {
+    throw new Error('Database not initialized.');
   }
 
-  return db;
+  return database;
 };
 
-export { connectToDb, getDb };
+const getPracticeDb = () => {
+  if (!client) {
+    throw new Error('Database not initialized.');
+  }
+
+  return client.db('practice');
+};
+
+export { connectToDb, getDb, getPracticeDb };
