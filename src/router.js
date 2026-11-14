@@ -13,30 +13,6 @@ const router = express.Router();
 
 /**
  * @openapi
- * /books/{id}:
- *   get:
- *     summary: Get one book by id
- *     tags:
- *       - Books
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         description: The custom book id, such as b1
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Book returned successfully
- *       404:
- *         description: Book not found
- *       500:
- *         description: Internal server error
- */
-
-
-/**
- * @openapi
  * /authors:
  *   get:
  *     summary: Get all authors
@@ -312,8 +288,5 @@ router.put('/books/:id', updateBookHandler);
 router.delete('/books/:id', deleteBookHandler);
 router.delete('/authors/:id', deleteAuthor);
 router.get('/authors', getAllAuthors);
-router.get('/books', getBooksHandler);
-router.get('/books/:id', getBookByIdHandler);
-
 
 export default router;
